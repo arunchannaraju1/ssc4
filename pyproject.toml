@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "scantool"
+version = "0.1.0"
+description = "A Python wrapper for nmap with extra functionalities"
+authors = ["ac11937"]
+packages = [{include = "scantool", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.13"
+python-nmap = "^0.7.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^9.0.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
