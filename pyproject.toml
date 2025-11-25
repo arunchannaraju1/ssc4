@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "scantool"
+name = "scantoolac11937"
 version = "0.1.0"
 description = "A Python wrapper for nmap with extra functionalities"
 authors = ["ac11937"]
