@@ -1,0 +1,383 @@
+{
+  "components": [
+    {
+      "bom-ref": "colorama@0.4.6",
+      "description": "Cross-platform colored terminal text.",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/colorama/#colorama-0.4.6-py2.py3-none-any.whl"
+        },
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/colorama/#colorama-0.4.6.tar.gz"
+        }
+      ],
+      "name": "colorama",
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "type": "library",
+      "version": "0.4.6"
+    },
+    {
+      "bom-ref": "iniconfig@2.3.0",
+      "description": "brain-dead simple config-ini parsing",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "f631c04d2c48c52b84d0d0549c99ff3859c98df65b3101406327ecc7d53fbf12"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/iniconfig/#iniconfig-2.3.0-py3-none-any.whl"
+        },
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "c76315c77db068650d49c5b56314774a7804df16fee4402c1f19d6d15d8c4730"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/iniconfig/#iniconfig-2.3.0.tar.gz"
+        }
+      ],
+      "name": "iniconfig",
+      "purl": "pkg:pypi/iniconfig@2.3.0",
+      "type": "library",
+      "version": "2.3.0"
+    },
+    {
+      "bom-ref": "packaging@25.0",
+      "description": "Core utilities for Python packages",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/packaging/#packaging-25.0-py3-none-any.whl"
+        },
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/packaging/#packaging-25.0.tar.gz"
+        }
+      ],
+      "name": "packaging",
+      "purl": "pkg:pypi/packaging@25.0",
+      "type": "library",
+      "version": "25.0"
+    },
+    {
+      "bom-ref": "pluggy@1.6.0",
+      "description": "plugin and hook calling mechanisms for python",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "e920276dd6813095e9377c0bc5566d94c932c33b27a3e3945d8389c374dd4746"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pluggy/#pluggy-1.6.0-py3-none-any.whl"
+        },
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "7dcc130b76258d33b90f61b658791dede3486c3e6bfb003ee5c9bfb396dd22f3"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pluggy/#pluggy-1.6.0.tar.gz"
+        }
+      ],
+      "name": "pluggy",
+      "purl": "pkg:pypi/pluggy@1.6.0",
+      "type": "library",
+      "version": "1.6.0"
+    },
+    {
+      "bom-ref": "pygments@2.19.2",
+      "description": "Pygments is a syntax highlighting package written in Python.",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "86540386c03d588bb81d44bc3928634ff26449851e99741617ecb9037ee5ec0b"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pygments/#pygments-2.19.2-py3-none-any.whl"
+        },
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "636cb2477cec7f8952536970bc533bc43743542f70392ae026374600add5b887"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pygments/#pygments-2.19.2.tar.gz"
+        }
+      ],
+      "name": "pygments",
+      "purl": "pkg:pypi/pygments@2.19.2",
+      "type": "library",
+      "version": "2.19.2"
+    },
+    {
+      "bom-ref": "pytest@9.0.1",
+      "description": "pytest: simple powerful testing with Python",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "67be0030d194df2dfa7b556f2e56fb3c3315bd5c8822c6951162b92b32ce7dad"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pytest/#pytest-9.0.1-py3-none-any.whl"
+        },
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "3e9c069ea73583e255c3b21cf46b8d3c56f6e3a1a8f6da94ccb0fcf57b9d73c8"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/pytest/#pytest-9.0.1.tar.gz"
+        }
+      ],
+      "name": "pytest",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "dev"
+        }
+      ],
+      "purl": "pkg:pypi/pytest@9.0.1",
+      "type": "library",
+      "version": "9.0.1"
+    },
+    {
+      "bom-ref": "python-nmap@0.7.1",
+      "description": "This is a python class to use nmap and access scan results from python3",
+      "externalReferences": [
+        {
+          "comment": "from legacy-api",
+          "hashes": [
+            {
+              "alg": "SHA-256",
+              "content": "f75af6b91dd8e3b0c31f869db32163f62ada686945e5b7c25f84bc0f7fad3b64"
+            }
+          ],
+          "type": "distribution",
+          "url": "https://pypi.org/simple/python-nmap/#python-nmap-0.7.1.tar.gz"
+        }
+      ],
+      "name": "python-nmap",
+      "properties": [
+        {
+          "name": "cdx:poetry:group",
+          "value": "main"
+        }
+      ],
+      "purl": "pkg:pypi/python-nmap@0.7.1",
+      "type": "library",
+      "version": "0.7.1"
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "colorama@0.4.6"
+    },
+    {
+      "ref": "iniconfig@2.3.0"
+    },
+    {
+      "ref": "packaging@25.0"
+    },
+    {
+      "ref": "pluggy@1.6.0"
+    },
+    {
+      "ref": "pygments@2.19.2"
+    },
+    {
+      "dependsOn": [
+        "colorama@0.4.6",
+        "iniconfig@2.3.0",
+        "packaging@25.0",
+        "pluggy@1.6.0",
+        "pygments@2.19.2"
+      ],
+      "ref": "pytest@9.0.1"
+    },
+    {
+      "ref": "python-nmap@0.7.1"
+    },
+    {
+      "dependsOn": [
+        "pytest@9.0.1",
+        "python-nmap@0.7.1"
+      ],
+      "ref": "scantoolac11937"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "scantoolac11937",
+      "description": "A Python wrapper for nmap with extra functionalities",
+      "name": "scantoolac11937",
+      "type": "application",
+      "version": "0.1.0"
+    },
+    "timestamp": "2025-11-25T03:21:59.313185+00:00",
+    "tools": {
+      "components": [
+        {
+          "description": "CycloneDX Software Bill of Materials (SBOM) generator for Python projects and environments",
+          "externalReferences": [
+            {
+              "type": "build-system",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/actions"
+            },
+            {
+              "type": "distribution",
+              "url": "https://pypi.org/project/cyclonedx-bom/"
+            },
+            {
+              "type": "documentation",
+              "url": "https://cyclonedx-bom-tool.readthedocs.io/"
+            },
+            {
+              "type": "issue-tracker",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/issues"
+            },
+            {
+              "type": "license",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/blob/main/LICENSE"
+            },
+            {
+              "type": "release-notes",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/blob/main/CHANGELOG.md"
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/"
+            },
+            {
+              "type": "website",
+              "url": "https://github.com/CycloneDX/cyclonedx-python/#readme"
+            }
+          ],
+          "group": "CycloneDX",
+          "licenses": [
+            {
+              "license": {
+                "acknowledgement": "declared",
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "name": "cyclonedx-py",
+          "type": "application",
+          "version": "7.2.1"
+        },
+        {
+          "description": "Python library for CycloneDX",
+          "externalReferences": [
+            {
+              "type": "build-system",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/actions"
+            },
+            {
+              "type": "distribution",
+              "url": "https://pypi.org/project/cyclonedx-python-lib/"
+            },
+            {
+              "type": "documentation",
+              "url": "https://cyclonedx-python-library.readthedocs.io/"
+            },
+            {
+              "type": "issue-tracker",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/issues"
+            },
+            {
+              "type": "license",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/LICENSE"
+            },
+            {
+              "type": "release-notes",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/blob/main/CHANGELOG.md"
+            },
+            {
+              "type": "vcs",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib"
+            },
+            {
+              "type": "website",
+              "url": "https://github.com/CycloneDX/cyclonedx-python-lib/#readme"
+            }
+          ],
+          "group": "CycloneDX",
+          "licenses": [
+            {
+              "license": {
+                "acknowledgement": "declared",
+                "id": "Apache-2.0"
+              }
+            }
+          ],
+          "name": "cyclonedx-python-lib",
+          "type": "library",
+          "version": "11.5.0"
+        }
+      ]
+    }
+  },
+  "serialNumber": "urn:uuid:1fc7d47d-9a28-4f32-8b15-2540c7dd981a",
+  "version": 1,
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6"
+}
