@@ -16,12 +16,12 @@ jobs:
         POETRY_VIRTUALENVS_PATH: /home/user/.cache/pypoetry/virtualenvs
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.CR_PAT }}   # <-- IMPORTANT
 
     steps:
       - uses: actions/checkout@v4
         with:
-          persist-credentials: false # needed to prevent trufflehog from failing
+          persist-credentials: false
 
       - name: Run repository secrets scan via trufflehog
         run: bin/run_trufflehog.sh
