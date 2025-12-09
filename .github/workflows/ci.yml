@@ -10,21 +10,21 @@ jobs:
     runs-on: ubuntu-24.04-arm
 
     steps:
-      # 1️⃣ Checkout the repo
+      # 1️⃣ Checkout repository
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
 
-      # 2️⃣ Log in to GitHub Container Registry (using PAT)
-      - name: Log in to GHCR
+      # 2️⃣ Log in to GHCR using PAT
+      - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       # 3️⃣ Pull the private container image
       - name: Pull container image
         run: docker pull ghcr.io/wp732/citool:latest
 
-      # 4️⃣ Run trufflehog inside the container
-      - name: Run repository secrets scan via trufflehog
+      # 4️⃣ Run repository secrets scan via trufflehog
+      - name: Run trufflehog
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -48,7 +48,7 @@ jobs:
             bin/add_missing_imports.sh
 
       # 6️⃣ Run SAST via bandit
-      - name: Run SAST via bandit
+      - name: Run bandit
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -57,7 +57,7 @@ jobs:
             bin/run_bandit.sh -f txt
 
       # 7️⃣ Run code formatting check via ruff
-      - name: Run code formatting check via ruff
+      - name: Run ruff
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -66,7 +66,7 @@ jobs:
             bin/run_ruff.sh --exclude tests/
 
       # 8️⃣ Run linting via pylint
-      - name: Run linting via pylint
+      - name: Run pylint
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -75,7 +75,7 @@ jobs:
             bin/run_pylint.sh --disable=C0114,C0115,C0116
 
       # 9️⃣ Run type checking via mypy
-      - name: Run type checking via mypy
+      - name: Run mypy
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -84,7 +84,7 @@ jobs:
             bin/run_mypy.sh
 
       # 🔟 Run unit tests via pytest
-      - name: Run unit tests via pytest
+      - name: Run pytest
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -93,7 +93,7 @@ jobs:
             bin/run_pytests.sh
 
       # 11️⃣ Run code coverage check
-      - name: Run code coverage check
+      - name: Run coverage
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
