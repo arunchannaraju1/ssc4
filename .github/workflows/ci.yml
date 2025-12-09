@@ -10,16 +10,21 @@ jobs:
     runs-on: ubuntu-24.04-arm
 
     steps:
-      # 1️⃣ Log in to GHCR using PAT
-      - name: Log in to GitHub Container Registry
+      # 1️⃣ Checkout the repo
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      # 2️⃣ Log in to GitHub Container Registry (using PAT)
+      - name: Log in to GHCR
         run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      # 2️⃣ Pull the private container image
+      # 3️⃣ Pull the private container image
       - name: Pull container image
         run: docker pull ghcr.io/wp732/citool:latest
 
-      # 3️⃣ Run all steps inside the container
-      - name: Run all steps inside container
+      # 4️⃣ Run trufflehog inside the container
+      - name: Run repository secrets scan via trufflehog
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
@@ -27,18 +32,71 @@ jobs:
             -e HOME=/home/user \
             -e POETRY_VIRTUALENVS_PATH=/home/user/.cache/pypoetry/virtualenvs \
             ghcr.io/wp732/citool:latest \
-            /bin/bash -c "
-              bin/run_trufflehog.sh &&
-              bin/add_missing_imports.sh &&
-              bin/run_bandit.sh -f txt &&
-              bin/run_ruff.sh --exclude tests/ &&
-              bin/run_pylint.sh --disable=C0114,C0115,C0116 &&
-              bin/run_mypy.sh &&
-              bin/run_pytests.sh &&
-              bin/run_coverage_tests.sh
-            "
+            bin/run_trufflehog.sh
+        env:
+          THOG_LOG_LEVEL: ${{ vars.THOG_LOG_LEVEL }}
 
-      # 4️⃣ Checkout the repository (if needed outside container)
-      - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
+      # 5️⃣ Add missing import packages
+      - name: Add missing import packages
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            -e HOME=/home/user \
+            -e POETRY_VIRTUALENVS_PATH=/home/user/.cache/pypoetry/virtualenvs \
+            ghcr.io/wp732/citool:latest \
+            bin/add_missing_imports.sh
+
+      # 6️⃣ Run SAST via bandit
+      - name: Run SAST via bandit
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ghcr.io/wp732/citool:latest \
+            bin/run_bandit.sh -f txt
+
+      # 7️⃣ Run code formatting check via ruff
+      - name: Run code formatting check via ruff
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ghcr.io/wp732/citool:latest \
+            bin/run_ruff.sh --exclude tests/
+
+      # 8️⃣ Run linting via pylint
+      - name: Run linting via pylint
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ghcr.io/wp732/citool:latest \
+            bin/run_pylint.sh --disable=C0114,C0115,C0116
+
+      # 9️⃣ Run type checking via mypy
+      - name: Run type checking via mypy
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ghcr.io/wp732/citool:latest \
+            bin/run_mypy.sh
+
+      # 🔟 Run unit tests via pytest
+      - name: Run unit tests via pytest
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ghcr.io/wp732/citool:latest \
+            bin/run_pytests.sh
+
+      # 11️⃣ Run code coverage check
+      - name: Run code coverage check
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            ghcr.io/wp732/citool:latest \
+            bin/run_coverage_tests.sh
