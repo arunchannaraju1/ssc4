@@ -24,68 +24,64 @@ jobs:
           python-version: "3.11"
 
       # ----------------------------
-      # Step 3: Install dependencies
-      # (pip version – uncomment below if you use pip)
+      # Step 3: Install dependencies (pip)
       # ----------------------------
-      - name: Install dependencies (pip)
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install black ruff flake8 pylint bandit pytest pytest-cov trufflehog
-
-      # ---- If using poetry instead of pip, use this block instead ----
-      # - name: Install Poetry
-      #   run: curl -sSL https://install.python-poetry.org | python3 -
-      #
-      # - name: Install dependencies (poetry)
-      #   run: |
-      #     export PATH="$HOME/.local/bin:$PATH"
-      #     poetry install
+          pip install black ruff flake8 pylint bandit pytest pytest-cov
 
       # ----------------------------
-      # Step 4: Code formatting checks
+      # Step 4: Black formatting check
       # ----------------------------
-      - name: Run Black (formatting)
+      - name: Run Black
         run: black --check .
 
-      - name: Run Ruff (format + lint)
+      # ----------------------------
+      # Step 5: Ruff formatting + linting
+      # ----------------------------
+      - name: Run Ruff
         uses: astral-sh/ruff-action@v3
         with:
           args: check .
 
       # ----------------------------
-      # Step 5: Lint Checks
+      # Step 6: Run Flake8
       # ----------------------------
       - name: Run Flake8
         run: flake8 .
 
+      # ----------------------------
+      # Step 7: Run Pylint
+      # ----------------------------
       - name: Run Pylint
         run: |
           pylint $(git ls-files '*.py')
 
       # ----------------------------
-      # Step 6: SAST (Bandit)
+      # Step 8: SAST with Bandit
       # ----------------------------
       - name: Run Bandit security scan
         run: |
           bandit -r . -ll -iii
 
       # ----------------------------
-      # Step 7: Secret Scanning
+      # Step 9: Secret Scanning (TruffleHog)
       # ----------------------------
-      - name: TruffleHog Secret Scan
-        uses: trufflesecurity/trufflehog@v3
+      - name: Run TruffleHog Secret Scan
+        uses: docker://trufflesecurity/trufflehog:latest
         with:
-          extra_args: --only-verified --fail
+          args: detect --source=. --no-verification --fail
 
       # ----------------------------
-      # Step 8: Testing + Coverage
+      # Step 10: Testing + Coverage
       # ----------------------------
       - name: Run pytest with coverage
         run: |
           pytest --cov=. --cov-report=xml --cov-report=term
 
       # ----------------------------
-      # Step 9: Upload coverage report (optional)
+      # Step 11: Upload coverage report
       # ----------------------------
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
