@@ -8,43 +8,37 @@ on:
 jobs:
   test:
     runs-on: ubuntu-24.04-arm
-    container:
-      image: ghcr.io/wp732/citool:latest
-      options: --user root
-      env:
-        HOME: /home/user
-        POETRY_VIRTUALENVS_PATH: /home/user/.cache/pypoetry/virtualenvs
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.CR_PAT }}
 
     steps:
+      # 1️⃣ Log in to GHCR using PAT
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      # 2️⃣ Pull the private container image
+      - name: Pull container image
+        run: docker pull ghcr.io/wp732/citool:latest
+
+      # 3️⃣ Run all steps inside the container
+      - name: Run all steps inside container
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            -e HOME=/home/user \
+            -e POETRY_VIRTUALENVS_PATH=/home/user/.cache/pypoetry/virtualenvs \
+            ghcr.io/wp732/citool:latest \
+            /bin/bash -c "
+              bin/run_trufflehog.sh &&
+              bin/add_missing_imports.sh &&
+              bin/run_bandit.sh -f txt &&
+              bin/run_ruff.sh --exclude tests/ &&
+              bin/run_pylint.sh --disable=C0114,C0115,C0116 &&
+              bin/run_mypy.sh &&
+              bin/run_pytests.sh &&
+              bin/run_coverage_tests.sh
+            "
+
+      # 4️⃣ Checkout the repository (if needed outside container)
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-
-      - name: Run repository secrets scan via trufflehog
-        run: bin/run_trufflehog.sh
-        env:
-          THOG_LOG_LEVEL: ${{ vars.THOG_LOG_LEVEL }}
-
-      - name: Add missing import packages
-        run: bin/add_missing_imports.sh
-
-      - name: Run SAST via bandit
-        run: bin/run_bandit.sh -f txt
-
-      - name: Run code formatting check via ruff
-        run: bin/run_ruff.sh --exclude tests/
-
-      - name: Run linting via pylint
-        run: bin/run_pylint.sh --disable=C0114,C0115,C0116
-
-      - name: Run type checking via mypy
-        run: bin/run_mypy.sh
-
-      - name: Run unit tests via pytest
-        run: bin/run_pytests.sh
-
-      - name: Run code coverage check
-        run: bin/run_coverage_tests.sh
