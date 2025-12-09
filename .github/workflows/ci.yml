@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-24.04-arm 
+    runs-on: ubuntu-24.04-arm
     container:
       image: ghcr.io/wp732/citool:latest
       options: --user root
@@ -16,7 +16,7 @@ jobs:
         POETRY_VIRTUALENVS_PATH: /home/user/.cache/pypoetry/virtualenvs
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CR_PAT }}   # <-- IMPORTANT
+        password: ${{ secrets.CR_PAT }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
 
       - name: Add missing import packages
         run: bin/add_missing_imports.sh
- 
+
       - name: Run SAST via bandit
         run: bin/run_bandit.sh -f txt
 
@@ -39,10 +39,10 @@ jobs:
 
       - name: Run linting via pylint
         run: bin/run_pylint.sh --disable=C0114,C0115,C0116
- 
+
       - name: Run type checking via mypy
         run: bin/run_mypy.sh
- 
+
       - name: Run unit tests via pytest
         run: bin/run_pytests.sh
 
