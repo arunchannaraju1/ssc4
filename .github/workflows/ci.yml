@@ -1,90 +1,50 @@
-name: Continuous Integration
+name: test
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - 'main'
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-24.04-arm 
+    container:
+      image: ghcr.io/wp732/citool:latest
+      options: --user root
+      env:
+        HOME: /home/user
+        POETRY_VIRTUALENVS_PATH: /home/user/.cache/pypoetry/virtualenvs
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      # ----------------------------
-      # Step 1: Checkout code
-      # ----------------------------
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # ----------------------------
-      # Step 2: Set up Python
-      # ----------------------------
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
         with:
-          python-version: "3.11"
+          persist-credentials: false # needed to prevent trufflehog from failing
 
-      # ----------------------------
-      # Step 3: Install dependencies (pip)
-      # ----------------------------
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install black ruff flake8 pylint bandit pytest pytest-cov
+      - name: Run repository secrets scan via trufflehog
+        run: bin/run_trufflehog.sh
+        env:
+          THOG_LOG_LEVEL: ${{ vars.THOG_LOG_LEVEL }}
 
-      # ----------------------------
-      # Step 4: Black formatting check
-      # ----------------------------
-      - name: Run Black
-        run: black --check .
+      - name: Add missing import packages
+        run: bin/add_missing_imports.sh
+ 
+      - name: Run SAST via bandit
+        run: bin/run_bandit.sh -f txt
 
-      # ----------------------------
-      # Step 5: Ruff formatting + linting
-      # ----------------------------
-      - name: Run Ruff
-        uses: astral-sh/ruff-action@v3
-        with:
-          args: check .
+      - name: Run code formatting check via ruff
+        run: bin/run_ruff.sh --exclude tests/
 
-      # ----------------------------
-      # Step 6: Run Flake8
-      # ----------------------------
-      - name: Run Flake8
-        run: flake8 .
+      - name: Run linting via pylint
+        run: bin/run_pylint.sh --disable=C0114,C0115,C0116
+ 
+      - name: Run type checking via mypy
+        run: bin/run_mypy.sh
+ 
+      - name: Run unit tests via pytest
+        run: bin/run_pytests.sh
 
-      # ----------------------------
-      # Step 7: Run Pylint
-      # ----------------------------
-      - name: Run Pylint
-        run: |
-          pylint $(git ls-files '*.py')
-
-      # ----------------------------
-      # Step 8: SAST with Bandit
-      # ----------------------------
-      - name: Run Bandit security scan
-        run: |
-          bandit -r . -ll -iii
-
-      # ----------------------------
-      # Step 9: Secret Scanning (TruffleHog)
-      # ----------------------------
-      - name: Run TruffleHog Secret Scan
-        uses: docker://trufflesecurity/trufflehog:latest
-        with:
-          args: detect --source=. --no-verification --fail
-
-      # ----------------------------
-      # Step 10: Testing + Coverage
-      # ----------------------------
-      - name: Run pytest with coverage
-        run: |
-          pytest --cov=. --cov-report=xml --cov-report=term
-
-      # ----------------------------
-      # Step 11: Upload coverage report
-      # ----------------------------
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml
+      - name: Run code coverage check
+        run: bin/run_coverage_tests.sh
